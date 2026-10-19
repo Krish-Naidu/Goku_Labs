@@ -5,28 +5,28 @@
 
 /* ---------- CSS Variables ---------- */
 :root {
-  --ink: #2f2b3a;
-  --ink-soft: #6b6577;
-  --ink-faint: #9a94a6;
+  --ink: #f2eef6;
+  --ink-soft: #b9b2c7;
+  --ink-faint: #8a8398;
 
-  --cream: #faf7f4;
-  --white: #ffffff;
-  --blush: #f6e7e6;
-  --lilac: #ece7f6;
-  --mint: #e6f0e8;
+  --cream: #17141f;
+  --white: #1f1b2b;
+  --blush: #2a2130;
+  --lilac: #262038;
+  --mint: #1e2a28;
 
-  --accent: #7c6bb0;
-  --accent-soft: #b7a6e0;
+  --accent: #b7a6e0;
+  --accent-soft: #8f7fc4;
   --accent-warm: #e8a0b8;
 
-  --line: rgba(47, 43, 58, 0.10);
-  --line-strong: rgba(47, 43, 58, 0.18);
+  --line: rgba(242, 238, 246, 0.10);
+  --line-strong: rgba(242, 238, 246, 0.20);
 
   --radius: 22px;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 6px 18px rgba(47, 43, 58, 0.06);
-  --shadow: 0 18px 40px rgba(47, 43, 58, 0.10);
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.30);
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
 
   --font: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
@@ -82,7 +82,7 @@ a {
 
 .btn-primary {
   background: var(--ink);
-  color: var(--white);
+  color: #17141f;
   box-shadow: var(--shadow-sm);
 }
 
@@ -92,13 +92,13 @@ a {
 }
 
 .btn-ghost {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.06);
   color: var(--ink);
   border: 1px solid var(--line-strong);
 }
 
 .btn-ghost:hover {
-  background: var(--white);
+  background: rgba(255, 255, 255, 0.12);
   transform: translateY(-2px);
 }
 
@@ -107,7 +107,7 @@ a {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(250, 247, 244, 0.82);
+  background: rgba(23, 20, 31, 0.72);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
 }
@@ -135,7 +135,7 @@ a {
   height: 36px;
   border-radius: 50%;
   background: var(--ink);
-  color: var(--white);
+  color: #17141f;
   font-size: 1rem;
   font-weight: 600;
 }
@@ -189,7 +189,7 @@ a {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(250, 247, 244, 0.55) 0%, rgba(250, 247, 244, 0.15) 45%, rgba(250, 247, 244, 0) 100%);
+  background: linear-gradient(180deg, rgba(23, 20, 31, 0.72) 0%, rgba(23, 20, 31, 0.35) 45%, rgba(23, 20, 31, 0.55) 100%);
 }
 
 .hero-inner {
@@ -204,8 +204,8 @@ a {
 
 .badge {
   display: inline-block;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line-strong);
   color: var(--ink-soft);
   padding: 0.4rem 1.1rem;
   border-radius: var(--radius-pill);
@@ -247,8 +247,8 @@ a {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-soft);
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line-strong);
   padding: 0.5rem 1.1rem;
   border-radius: var(--radius-pill);
   backdrop-filter: blur(6px);
@@ -481,7 +481,7 @@ a {
   display: grid;
   place-items: center;
   font-weight: 600;
-  color: var(--white);
+  color: #17141f;
   background: var(--accent);
   flex-shrink: 0;
 }
