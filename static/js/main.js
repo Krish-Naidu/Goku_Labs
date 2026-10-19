@@ -255,48 +255,6 @@
     }
   };
 
-  /* --------------------------------------------------- Count-up counters --- */
-
-  const initCounters = () => {
-    const counters = [...document.querySelectorAll("[data-count]")];
-    if (!counters.length || !("IntersectionObserver" in window)) return;
-
-    const run = (el) => {
-      const target = Number(el.dataset.count);
-      if (!Number.isFinite(target)) return;
-
-      if (prefersReducedMotion) {
-        el.textContent = String(target);
-        return;
-      }
-
-      const duration = 1400;
-      const start = performance.now();
-
-      const tick = (now) => {
-        const progress = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        el.textContent = String(Math.round(target * eased));
-        if (progress < 1) window.requestAnimationFrame(tick);
-      };
-
-      window.requestAnimationFrame(tick);
-    };
-
-    const observer = new IntersectionObserver(
-      (entries, obs) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          run(entry.target);
-          obs.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    counters.forEach((el) => observer.observe(el));
-  };
-
   /* --------------------------------------------------- Card 3D tilt glow --- */
 
   const initTilt = () => {
@@ -467,7 +425,6 @@
     initReveal();
     initHeroGlow();
     initHeroCanvas();
-    initCounters();
     initTilt();
     initContactForm();
     initMisc();
