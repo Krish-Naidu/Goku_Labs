@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#07060d" />
+  <title>GokuLabs — Smarter apps, built faster with AI</title>
+  <meta name="description" content="GokuLabs engineers cutting-edge web and mobile solutions to scale your business." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="aurora" aria-hidden="true">
+    <span class="aurora__blob aurora__blob--purple"></span>
+    <span class="aurora__blob aurora__blob--blue"></span>
+    <span class="aurora__blob aurora__blob--yellow"></span>
+  </div>
+
+  <a class="skip-link" href="#hero">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a class="logo" href="#hero" aria-label="GokuLabs home">
+        <span class="logo__mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" role="img" focusable="false">
+            <path d="M17.5 2 6 18h7l-1.5 12L23 14h-7l1.5-12Z" />
+          </svg>
+        </span>
+        <span class="logo__text">GokuLabs</span>
+      </a>
+
+      <nav class="nav__links" id="nav-links" aria-label="Primary">
+        <a href="#services">Services</a>
+        <a href="#why-us">Why Us</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+        <a class="btn btn--ghost btn--sm nav__cta" href="#contact">Start a Project</a>
+      </nav>
+
+      <button class="nav__toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav__progress" aria-hidden="true"><span id="scroll-progress"></span></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero__glow" id="hero-glow" aria-hidden="true"></div>
+
+      <div class="container hero__inner">
+        <span class="pill" data-reveal>
+          <span class="pill__dot" aria-hidden="true"></span>
+          AI-native product studio · London
+        </span>
+
+        <h1 class="hero__title" data-reveal data-reveal-delay="80">
+          Smarter apps, built faster with&nbsp;AI.
+        </h1>
+
+        <p class="hero__sub" data-reveal data-reveal-delay="160">
+          We engineer cutting-edge web and mobile solutions to scale your business.
+        </p>
+
+        <div class="hero__actions" data-reveal data-reveal-delay="240">
+          <a class="btn btn--secondary" href="#services">See Our Work</a>
+          <a class="btn btn--primary" href="#contact">Start a Project</a>
+        </div>
+
+        <dl class="hero__stats" data-reveal data-reveal-delay="320">
+          <div class="stat">
+            <dt>Delivery</dt>
+            <dd><span data-count="4">0</span>× faster</dd>
+          </div>
+          <div class="stat">
+            <dt>Shipped</dt>
+            <dd><span data-count="120">0</span>+ launches</dd>
+          </div>
+          <div class="stat">
+            <dt>Uptime</dt>
+            <dd><span data-count="99">0</span>.9%</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <header class="section__head">
+          <p class="eyebrow" data-reveal>Services</p>
+          <h2 class="section__title" data-reveal data-reveal-delay="60">What We Do</h2>
+          <p class="section__lead" data-reveal data-reveal-delay="120">
+            One senior team, three disciplines — wired together so your product ships as a whole,
+            not as disconnected parts.
+          </p>
+        </header>
+
+        <div class="cards cards--3">
+          <article class="card card--glow" data-reveal data-tilt data-reveal-delay="0">
+            <span class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" focusable="false">
+                <path d="M3 5.5A1.5 1.5 0 0 1 4.5 4h15A1.5 1.5 0 0 1 21 5.5v13A1.5 1.5 0 0 1 19.5 20h-15A1.5 1.5 0 0 1 3 18.5v-13Zm0 .5h18M7 8.5h.01" />
+              </svg>
+            </span>
+            <h3 class="card__title">Web Apps</h3>
+            <p class="card__text">Custom, high-performance web applications.</p>
+            <ul class="card__list">
+              <li>Design systems &amp; component libraries</li>
+              <li>Realtime dashboards and portals</li>
+              <li>Core Web Vitals tuning</li>
+            </ul>
+            <span class="card__index" aria-hidden="true">01</span>
+          </article>
+
+          <article class="card card--glow" data-reveal data-tilt data-reveal-delay="120">
+            <span class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" focusable="false">
+                <path d="M8 2.5h8a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-17a1 1 0 0 1 1-1Zm3 16h2" />
+              </svg>
+            </span>
+            <h3 class="card__title">Mobile Apps</h3>
+            <p class="card__text">Native and cross-platform mobile experiences.</p>
+            <ul class="card__list">
+              <li>iOS &amp; Android from one codebase</li>
+              <li>Offline-first sync &amp; push flows</li>
+              <li>Store release pipelines</li>
+            </ul>
+            <span class="card__index" aria-hidden="true">02</span>
+          </article>
+
+          <article class="card card--glow" data-reveal data-tilt data-reveal-delay="240">
+            <span class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" focusable="false">
+                <path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1" />
+                <circle cx="12" cy="12" r="3.2" />
+              </svg>
+            </span>
+            <h3 class="card__title">AI &amp; Automation</h3>
+            <p class="card__text">Integrating intelligent workflows to save you time.</p>
+            <ul class="card__list">
+              <li>LLM copilots in your own product</li>
+              <li>Document &amp; data pipelines</li>
+              <li>Human-in-the-loop guardrails</li>
+            </ul>
+            <span class="card__index" aria-hidden="true">03</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="why-us">
+      <div class="why__aura" aria-hidden="true"></div>
+      <div class="container">
+        <header class="section__head">
+          <p class="eyebrow" data-reveal>Why Us</p>
+          <h2 class="section__title" data-reveal data-reveal-delay="60">The GokuLabs Advantage</h2>
+        </header>
+
+        <div class="why">
+          <ol class="steps">
+            <li class="step" data-reveal>
+              <span class="step__num" aria-hidden="true">01</span>
+              <div>
+                <h3 class="step__title">Faster Delivery</h3>
+                <p class="step__text">
+                  AI-assisted engineering and tight two-week loops turn roadmaps into shipped
+                  features while the market is still paying attention.
+                </p>
+              </div>
+            </li>
+            <li class="step" data-reveal data-reveal-delay="120">
+              <span class="step__num" aria-hidden="true">02</span>
+              <div>
+                <h3 class="step__title">Smart Solutions</h3>
+                <p class="step__text">
+                  We start with the outcome, not the framework — then pick the smallest stack that
+                  gets you there with room to grow.
+                </p>
+              </div>
+            </li>
+            <li class="step" data-reveal data-reveal-delay="240">
+              <span class="step__num" aria-hidden="true">03</span>
+              <div>
+                <h3 class="step__title">Built to Scale</h3>
+                <p class="step__text">
+                  Observability, tests and sensible architecture from day one, so your app stays
+                  fast at ten users and ten million.
+                </p>
+              </div>
+            </li>
+          </ol>
+
+          <aside class="panel" data-reveal data-reveal-delay="160">
+            <div class="panel__inner">
+              <p class="panel__eyebrow">Advantage</p>
+              <ul class="panel__list">
+                <li><span aria-hidden="true">⚡</span> Faster Delivery</li>
+                <li><span aria-hidden="true">◆</span> Smart Solutions</li>
+                <li><span aria-hidden="true">▲</span> Built to Scale</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="testimonials">
+      <div class="container">
+        <header class="section__head">
+          <p class="eyebrow" data-reveal>Testimonials</p>
+          <h2 class="section__title" data-reveal data-reveal-delay="60">Kind words, shipped products</h2>
+        </header>
+
+        <div class="cards cards--2">
+          <figure class="quote card--glow" data-reveal data-tilt>
+            <span class="quote__mark" aria-hidden="true">“</span>
+            <blockquote>“GokuLabs transformed our workflow completely.”</blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true">AH</span>
+              <span>
+                <strong>Amelia Hart</strong>
+                <em>COO, Northwind Retail</em>
+              </span>
+            </figcaption>
+          </figure>
+
+          <figure class="quote card--glow" data-reveal data-tilt data-reveal-delay="140">
+            <span class="quote__mark" aria-hidden="true">“</span>
+            <blockquote>“The smartest engineering team we've worked with.”</blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true">DR</span>
+              <span>
+                <strong>Daniel Reyes</strong>
+                <em>Founder, Lumen Health</em>
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--contact" id="contact">
+      <div class="container contact">
+        <div class="contact__intro">
+          <p class="eyebrow" data-reveal>Contact</p>
+          <h2 class="section__title" data-reveal data-reveal-delay="60">Let's build something smart.</h2>
+          <p class="section__lead" data-reveal data-reveal-delay="120">
+            Tell us what you're working on. You'll hear back from a real engineer — usually within
+            one working day.
+          </p>
+
+          <address class="contact__details" data-reveal data-reveal-delay="180">
+            <div>
+              <span class="contact__label">Studio</span>
+              <p>66 Paul Street, London</p>
+            </div>
+            <div>
+              <span class="contact__label">Email</span>
+              <p><a href="mailto:hello@gokolabs.io">hello@gokolabs.io</a></p>
+            </div>
+            <div>
+              <span class="contact__label">Hours</span>
+              <p>Mon – Fri · 09:00 – 18:00 GMT</p>
+            </div>
+          </address>
+        </div>
+
+        <div class="contact__form-wrap" data-reveal data-reveal-delay="120">
+          <form class="form" id="contact-form" method="post" action="/api/contact" novalidate>
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" placeholder="Ada Lovelace" maxlength="80" required />
+              <p class="field__error" data-error-for="name" role="alert"></p>
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com" maxlength="254" required />
+              <p class="field__error" data-error-for="email" role="alert"></p>
+            </div>
+
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="We need a mobile app that..." maxlength="4000" required></textarea>
+              <p class="field__error" data-error-for="message" role="alert"></p>
+            </div>
+
+            <button class="btn btn--primary btn--block" type="submit" id="submit-btn">
+              <span class="btn__label">Submit</span>
+              <span class="btn__spinner" aria-hidden="true"></span>
+            </button>
+
+            <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a class="logo logo--sm" href="#hero">
+        <span class="logo__mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" role="img" focusable="false">
+            <path d="M17.5 2 6 18h7l-1.5 12L23 14h-7l1.5-12Z" />
+          </svg>
+        </span>
+        <span class="logo__text">GokuLabs</span>
+      </a>
+      <p class="footer__addr">66 Paul Street, London</p>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="#services">Services</a>
+        <a href="#why-us">Why Us</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p class="footer__copy">© <span id="year">2026</span> GokuLabs. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+</body>
+</html>
