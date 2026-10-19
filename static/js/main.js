@@ -144,76 +144,126 @@
     });
   };
 
-  /* ------------------------------------------------- Hero particle field --- */
+  /* ---------------------------------------------------- Starfield canvas --- */
+  /* Fixed, full-viewport constellation field that sits behind the whole page,
+     so the motif carries past the hero like the reference design. */
 
-  const initHeroCanvas = () => {
-    const canvas = document.getElementById("hero-canvas");
+  const initStarfield = () => {
+    const canvas = document.getElementById("starfield");
     if (!canvas || prefersReducedMotion) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const hero = document.getElementById("hero");
+    const LINK_DISTANCE = 120;
+    const POINTER_RADIUS = 150;
+    const ZOOM = 0.97;
+
     let width = 0;
     let height = 0;
-    let dots = [];
+    let stars = [];
     let rafId = 0;
-    const pointer = { x: 0.5, y: 0.5 };
+    let scrolling = false;
+    let scrollIdle = 0;
+
+    const pointer = { x: -1000, y: -1000 };
+    const scroll = { y: window.scrollY, velocity: 0 };
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const build = () => {
-      const rect = hero.getBoundingClientRect();
-      width = rect.width;
-      height = rect.height;
+      width = window.innerWidth;
+      height = window.innerHeight;
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const count = Math.round(Math.min(Math.max(width / 16, 40), 110));
-      dots = Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: Math.random() * 1.7 + 0.5,
-        vx: (Math.random() - 0.5) * 0.24,
-        vy: (Math.random() - 0.5) * 0.24,
-        hue: Math.random() > 0.68 ? "34, 211, 238" : "139, 92, 246",
-      }));
+      const count = Math.round(Math.min(Math.max((width * height) / 17000, 40), 120));
+      stars = Array.from({ length: count }, () => {
+        const big = Math.random() > 0.82;
+        const radius = big ? Math.random() * 1.2 + 1.7 : Math.random() * 1.4 + 0.5;
+        const hue = Math.random() > 0.7 ? "34, 211, 238" : "139, 92, 246";
+        const speed = (0.06 + Math.random() * 0.16) * (big ? 0.6 : 1);
+        const angle = Math.random() * Math.PI * 2;
+
+        return {
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: radius,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          hue,
+          phase: Math.random() * Math.PI * 2,
+          pulse: 0.5 + Math.random() * 1.6,
+          depth: big ? 1 : 0.55 + Math.random() * 0.45,
+          alpha: big ? 0.78 : 0.38 + Math.random() * 0.4,
+        };
+      });
     };
 
-    const draw = () => {
+    const draw = (time) => {
+      // Scroll parallax: stars crease with the page then settle back.
+      scroll.velocity *= 0.92;
+      const parallax = scroll.velocity;
+
+      // Scale down around the centre to create the "formed constellation" framing.
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, width, height);
+      ctx.translate(width / 2, height / 2);
+      ctx.scale(ZOOM, ZOOM);
+      ctx.translate(-width / 2, -height / 2);
 
-      for (let i = 0; i < dots.length; i += 1) {
-        const dot = dots[i];
-        dot.x += dot.vx;
-        dot.y += dot.vy;
+      for (let i = 0; i < stars.length; i += 1) {
+        const star = stars[i];
 
-        if (dot.x < -20) dot.x = width + 20;
-        if (dot.x > width + 20) dot.x = -20;
-        if (dot.y < -20) dot.y = height + 20;
-        if (dot.y > height + 20) dot.y = -20;
+        const dxp = pointer.x - star.x;
+        const dyp = pointer.y - star.y;
+        const pointerDistance = Math.hypot(dxp, dyp);
 
-        const drift = Math.hypot(dot.x / width - pointer.x, dot.y / height - pointer.y);
-        const alpha = Math.max(0.08, 0.42 - drift * 0.4);
+        // Gentle repulsion, mirroring the reference's pointer interaction.
+        if (pointerDistance < POINTER_RADIUS && pointerDistance > 0) {
+          star.x -= (dxp / pointerDistance) * 0.16;
+          star.y -= (dyp / pointerDistance) * 0.16;
+        }
+
+        star.x += star.vx;
+        star.y += star.vy;
+
+        if (star.x < -30) star.x = width + 30;
+        if (star.x > width + 30) star.x = -30;
+        if (star.y < -30) star.y = height + 30;
+        if (star.y > height + 30) star.y = -30;
+
+        const twinkle = 0.72 + Math.sin(time * 0.0012 * star.pulse + star.phase) * 0.28;
+        const drawY = star.y + parallax * star.depth;
+        const near = Math.max(0, 1 - pointerDistance / (POINTER_RADIUS * 1.6));
+
+        // Halo on the brighter stars so the field reads as depth, not noise.
+        if (star.depth === 1) {
+          ctx.beginPath();
+          ctx.arc(star.x, drawY, star.r * 3.4, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${star.hue}, ${(0.05 * twinkle).toFixed(3)})`;
+          ctx.fill();
+        }
 
         ctx.beginPath();
-        ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${dot.hue}, ${alpha})`;
+        ctx.arc(star.x, drawY, star.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${star.hue}, ${(star.alpha * twinkle + near * 0.32).toFixed(3)})`;
         ctx.fill();
 
-        for (let j = i + 1; j < dots.length; j += 1) {
-          const other = dots[j];
-          const dx = dot.x - other.x;
-          const dy = dot.y - other.y;
-          const dist = Math.hypot(dx, dy);
-          if (dist > 118) continue;
+        for (let j = i + 1; j < stars.length; j += 1) {
+          const other = stars[j];
+          const dx = star.x - other.x;
+          const dy = star.y - other.y;
+          const distance = Math.hypot(dx, dy);
+          if (distance > LINK_DISTANCE) continue;
 
+          const falloff = 1 - distance / LINK_DISTANCE;
           ctx.beginPath();
-          ctx.moveTo(dot.x, dot.y);
-          ctx.lineTo(other.x, other.y);
-          ctx.strokeStyle = `rgba(139, 92, 246, ${(0.14 * (1 - dist / 118)).toFixed(3)})`;
+          ctx.moveTo(star.x, drawY);
+          ctx.lineTo(other.x, other.y + parallax * other.depth);
+          ctx.strokeStyle = `rgba(139, 92, 246, ${(0.2 * falloff).toFixed(3)})`;
           ctx.lineWidth = 1;
           ctx.stroke();
         }
@@ -223,36 +273,55 @@
     };
 
     build();
-    draw();
-
-    const onResize = () => {
-      window.cancelAnimationFrame(rafId);
-      build();
-      draw();
-    };
+    rafId = window.requestAnimationFrame(draw);
 
     let resizeTimer = 0;
     window.addEventListener("resize", () => {
       window.clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(onResize, 180);
+      resizeTimer = window.setTimeout(() => {
+        window.cancelAnimationFrame(rafId);
+        build();
+        rafId = window.requestAnimationFrame(draw);
+      }, 180);
     });
 
-    window.addEventListener("pointermove", (event) => {
-      pointer.x = event.clientX / window.innerWidth;
-      pointer.y = event.clientY / window.innerHeight;
-    }, { passive: true });
+    window.addEventListener(
+      "pointermove",
+      (event) => {
+        pointer.x = event.clientX;
+        pointer.y = event.clientY;
+      },
+      { passive: true }
+    );
 
-    // Pause the animation loop when the hero scrolls out of view.
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) {
-          if (!rafId) draw();
-        } else {
-          window.cancelAnimationFrame(rafId);
-          rafId = 0;
-        }
-      }, { threshold: 0 }).observe(hero);
-    }
+    window.addEventListener("pointerleave", () => {
+      pointer.x = -1000;
+      pointer.y = -1000;
+    });
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        scroll.velocity = Math.max(-14, Math.min(14, (window.scrollY - scroll.y) * 0.22));
+        scroll.y = window.scrollY;
+        scrolling = true;
+        window.clearTimeout(scrollIdle);
+        scrollIdle = window.setTimeout(() => {
+          scrolling = false;
+        }, 120);
+      },
+      { passive: true }
+    );
+
+    // Stop animating when the tab is hidden to save battery.
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        window.cancelAnimationFrame(rafId);
+        rafId = 0;
+      } else if (!rafId && !scrolling) {
+        rafId = window.requestAnimationFrame(draw);
+      }
+    });
   };
 
   /* --------------------------------------------------- Card 3D tilt glow --- */
@@ -424,7 +493,7 @@
     initScrollSpy();
     initReveal();
     initHeroGlow();
-    initHeroCanvas();
+    initStarfield();
     initTilt();
     initContactForm();
     initMisc();
