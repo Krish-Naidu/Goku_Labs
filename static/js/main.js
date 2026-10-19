@@ -413,7 +413,8 @@
       if (button) button.disabled = true;
 
       try {
-        const response = await fetch(form.action, {
+        const endpoint = form.getAttribute("action") || "/api/contact";
+        const response = await fetch(endpoint, {
           method: "POST",
           headers: { Accept: "application/json" },
           body: new FormData(form),

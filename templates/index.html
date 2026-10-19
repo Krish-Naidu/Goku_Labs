@@ -281,7 +281,7 @@
             class="form"
             id="contact-form"
             method="post"
-            action="{{ 'mailto:hello@gokolabs.io' if static_build else '/api/contact' }}"
+            action="{{ '' if static_build else '/api/contact' }}"
             data-backend="{{ 'false' if static_build else 'true' }}"
             novalidate
           >
