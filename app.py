@@ -7,6 +7,7 @@ Run locally:
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -42,6 +43,28 @@ MAX_MESSAGE_LEN = 4000
 
 app = Flask(__name__)
 app.config["JSON_SORT_KEYS"] = False
+
+ASSET_FILES = ("css/style.css", "js/main.js")
+
+
+def asset_version() -> str:
+    """Short content hash of the CSS/JS bundles.
+
+    Appended to asset URLs as a query string so browsers fetch the new files
+    instead of serving a stale cached copy after a deploy.
+    """
+    digest = hashlib.sha256()
+    for name in ASSET_FILES:
+        try:
+            digest.update((BASE_DIR / "static" / name).read_bytes())
+        except OSError:
+            digest.update(name.encode("utf-8"))
+    return digest.hexdigest()[:10]
+
+
+@app.context_processor
+def inject_asset_version() -> dict[str, str]:
+    return {"asset_v": asset_version()}
 
 
 def _clean(value: Any) -> str:
