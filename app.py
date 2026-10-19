@@ -10,7 +10,10 @@ from __future__ import annotations
 import json
 import os
 import re
+import socket
 import sys
+import threading
+import webbrowser
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -136,6 +139,47 @@ def not_found(_error):
     return render_template("index.html"), 404
 
 
+def _banner(host: str, port: int) -> None:
+    url = f"http://{'127.0.0.1' if host in ('127.0.0.1', '0.0.0.0') else host}:{port}"
+    print(
+        "\n"
+        "  +----------------------------------------------+\n"
+        "  |  GokuLabs is running\n"
+        f"  |  {url}\n"
+        "  |  Press CTRL+C to stop\n"
+        "  +----------------------------------------------+\n",
+        flush=True,
+    )
+
+
+def _open_browser_later(url: str) -> None:
+    threading.Timer(1.0, lambda: webbrowser.open(url)).start()
+
+
+def _pick_port(preferred: int, host: str) -> int:
+    """Return `preferred`, or the next free port if it is already taken."""
+    for candidate in range(preferred, preferred + 20):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+            probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            try:
+                probe.bind((host, candidate))
+            except OSError:
+                continue
+        if candidate != preferred:
+            print(f"  Port {preferred} is busy — using {candidate} instead.", flush=True)
+        return candidate
+    raise SystemExit(f"No free port found in range {preferred}-{preferred + 19}.")
+
+
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", "5000"))
-    app.run(host="127.0.0.1", port=port, debug=True)
+    host = os.environ.get("HOST", "127.0.0.1")
+    port = _pick_port(int(os.environ.get("PORT", "5000")), host)
+    url = f"http://{'127.0.0.1' if host == '0.0.0.0' else host}:{port}"
+
+    # Werkzeug's reloader spawns a child process; only the parent should print/open.
+    if os.environ.get("WERKZEUG_RUN_MAIN") != "true":
+        _banner(host, port)
+        if os.environ.get("NO_BROWSER") != "1":
+            _open_browser_later(url)
+
+    app.run(host=host, port=port, debug=os.environ.get("FLASK_DEBUG", "1") == "1")

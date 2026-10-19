@@ -349,6 +349,7 @@
     const status = document.getElementById("form-status");
     const button = document.getElementById("submit-btn");
     const fields = ["name", "email", "message"];
+    const hasBackend = form.dataset.backend !== "false";
 
     const setFieldError = (name, message) => {
       const input = form.elements[name];
@@ -395,6 +396,16 @@
         Object.entries(clientErrors).forEach(([name, message]) => setFieldError(name, message));
         setStatus("Please check the highlighted fields.", "error");
         form.querySelector(".has-error input, .has-error textarea")?.focus();
+        return;
+      }
+
+      // Static hosting (GitHub Pages) has no backend — hand off to the mail client.
+      if (!hasBackend) {
+        const data = new FormData(form);
+        const subject = encodeURIComponent(`New project enquiry from ${data.get("name")}`);
+        const body = encodeURIComponent(`${data.get("message")}\n\n— ${data.get("name")} (${data.get("email")})`);
+        window.location.href = `mailto:hello@gokolabs.io?subject=${subject}&body=${body}`;
+        setStatus("Opening your email app — your message is ready to send.", "success");
         return;
       }
 

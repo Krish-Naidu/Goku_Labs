@@ -7,9 +7,12 @@ Marketing site for GokuLabs — a vanilla HTML/CSS/JS front end served by a ligh
 ```
 Goku_Labs/
 ├── app.py                 # Flask server + contact form endpoint
+├── build_static.py        # Exports a static copy to _site/ for GitHub Pages
 ├── requirements.txt
+├── .github/workflows/
+│   └── deploy-pages.yml   # Builds and publishes _site/ to GitHub Pages
 ├── templates/
-│   └── index.html         # Page markup
+│   └── index.html         # Page markup (Jinja)
 ├── static/
 │   ├── css/style.css      # Design system (dark glassmorphism)
 │   └── js/main.js         # Micro-interactions (vanilla JS)
@@ -54,6 +57,26 @@ python -m venv .venv
 `POST /api/contact` accepts form-encoded or JSON bodies with `name`, `email`, and `message`.
 It returns `{"ok": true, "message": "..."}` on success, or `400` with a per-field `errors`
 object on validation failure. Valid submissions are appended to `data/messages.jsonl`.
+
+## Deploying to GitHub Pages
+
+GitHub Pages can only serve static files, so `build_static.py` renders the Jinja template
+to plain HTML and copies the assets into `_site/`:
+
+```bash
+python build_static.py
+```
+
+The workflow in `.github/workflows/deploy-pages.yml` runs this automatically on every push
+to `main` and publishes `_site/` to Pages.
+
+In a static build there is no Python process to receive the form, so the contact form
+degrades gracefully: it opens the visitor's email client with the message pre-filled,
+instead of silently failing. Run the Flask app if you want submissions stored server-side.
+
+> **Site not updating after a push?** Pages serves the `_site/` artifact produced by the
+> workflow. Check the **Actions** tab for a failed run, and that **Settings → Pages → Source**
+> is set to **GitHub Actions**.
 
 ## Features
 
