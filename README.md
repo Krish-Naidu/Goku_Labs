@@ -19,16 +19,29 @@ Goku_Labs/
 
 ## Run
 
-```bash
-python -m venv .venv
-.venv\Scripts\activate          # Windows
-# source .venv/bin/activate     # macOS / Linux
+The quickest way — install once, then run:
 
-pip install -r requirements.txt
+```bash
+python -m pip install -r requirements.txt
 python app.py
 ```
 
 Then open <http://127.0.0.1:5000>. Set `PORT` to use a different port.
+
+### Using a virtual environment (recommended for development)
+
+```bash
+python -m venv .venv
+.venv\Scripts\python.exe app.py      # Windows
+# source .venv/bin/activate && python app.py    # macOS / Linux
+```
+
+> **`ModuleNotFoundError: No module named 'flask'`?**
+> This means the `python` on your PATH is a different interpreter than the one you
+> installed Flask into. Either install the requirements with that same interpreter
+> (`python -m pip install -r requirements.txt`), or call the venv directly with
+> `.venv\Scripts\python.exe app.py`. To check which interpreter you're using, run
+> `python -c "import sys; print(sys.executable)"`.
 
 ## Endpoints
 

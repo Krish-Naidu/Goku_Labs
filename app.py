@@ -10,11 +10,23 @@ from __future__ import annotations
 import json
 import os
 import re
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from flask import Flask, jsonify, render_template, request
+try:
+    from flask import Flask, jsonify, render_template, request
+except ModuleNotFoundError:
+    sys.exit(
+        "Flask isn't installed for the interpreter running this file:\n"
+        f"  {sys.executable}\n\n"
+        "Install the dependencies first:\n"
+        "  python -m pip install -r requirements.txt\n\n"
+        "Or run the app inside its virtual environment:\n"
+        "  .venv\\Scripts\\python.exe app.py      (Windows)\n"
+        "  source .venv/bin/activate && python app.py   (macOS / Linux)"
+    )
 
 BASE_DIR = Path(__file__).resolve().parent
 MESSAGES_FILE = BASE_DIR / "data" / "messages.jsonl"
