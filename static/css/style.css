@@ -455,35 +455,6 @@ h1, h2, h3 {
 
 .hero__inner { position: relative; z-index: 2; max-width: 60rem; }
 
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.42rem 1rem 0.42rem 0.7rem;
-  margin-bottom: 1.6rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  font-size: 0.82rem;
-  color: var(--muted);
-}
-
-.pill__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--blue);
-  box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.6);
-  animation: ping 2.2s ease-out infinite;
-}
-
-@keyframes ping {
-  0% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.55); }
-  70%, 100% { box-shadow: 0 0 0 12px rgba(34, 211, 238, 0); }
-}
-
 .hero__title {
   font-size: clamp(2.6rem, 1.4rem + 6.4vw, 5.2rem);
   font-weight: 700;
