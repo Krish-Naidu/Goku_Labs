@@ -362,7 +362,7 @@
         const data = new FormData(form);
         const subject = encodeURIComponent(`New project enquiry from ${data.get("name")}`);
         const body = encodeURIComponent(`${data.get("message")}\n\n— ${data.get("name")} (${data.get("email")})`);
-        window.location.href = `mailto:hello@gokolabs.io?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:goku.labs.ltd@gmail.com?subject=${subject}&body=${body}`;
         setStatus("Opening your email app — your message is ready to send.", "success");
         return;
       }
