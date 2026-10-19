@@ -1,138 +1,138 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#2a2440"/>
-      <stop offset="35%" stop-color="#4a3a5c"/>
-      <stop offset="62%" stop-color="#8a5f74"/>
-      <stop offset="82%" stop-color="#c98a86"/>
-      <stop offset="100%" stop-color="#e8b48f"/>
+      <stop offset="0%" stop-color="#241f38"/>
+      <stop offset="30%" stop-color="#3d3352"/>
+      <stop offset="55%" stop-color="#6b4a62"/>
+      <stop offset="75%" stop-color="#a86a72"/>
+      <stop offset="90%" stop-color="#d99a80"/>
+      <stop offset="100%" stop-color="#f0c49a"/>
     </linearGradient>
 
-    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#ffe6c2" stop-opacity="0.95"/>
-      <stop offset="45%" stop-color="#f7c48f" stop-opacity="0.55"/>
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffe9c8" stop-opacity="0.9"/>
+      <stop offset="35%" stop-color="#f7c48f" stop-opacity="0.45"/>
       <stop offset="100%" stop-color="#f7c48f" stop-opacity="0"/>
     </radialGradient>
 
-    <linearGradient id="hillFar" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#3d5a52"/>
-      <stop offset="100%" stop-color="#2f4a44"/>
-    </linearGradient>
-    <linearGradient id="hillMid" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#2f5248"/>
-      <stop offset="100%" stop-color="#24413a"/>
-    </linearGradient>
-    <linearGradient id="hillNear" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#24463c"/>
-      <stop offset="100%" stop-color="#1a352e"/>
-    </linearGradient>
-    <linearGradient id="meadow" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#1e3d33"/>
-      <stop offset="100%" stop-color="#122820"/>
+    <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0c49a" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#f0c49a" stop-opacity="0"/>
     </linearGradient>
 
-    <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#e8b48f" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#e8b48f" stop-opacity="0"/>
-    </linearGradient>
+    <g id="tree">
+      <rect x="-5" y="0" width="10" height="36" fill="#3a2f28"/>
+      <circle cx="0" cy="-6" r="28" fill="#2c4f42"/>
+      <circle cx="-20" cy="10" r="18" fill="#26463b"/>
+      <circle cx="20" cy="10" r="18" fill="#26463b"/>
+      <circle cx="0" cy="-26" r="16" fill="#356050"/>
+    </g>
   </defs>
 
-  <!-- Sky -->
+  <!-- ===== Sky ===== -->
   <rect width="1600" height="900" fill="url(#sky)"/>
 
-  <!-- Sun glow -->
-  <circle cx="1120" cy="470" r="320" fill="url(#sun)"/>
-  <circle cx="1120" cy="470" r="70" fill="#ffe9c8" opacity="0.85"/>
+  <!-- Sun -->
+  <circle cx="1120" cy="600" r="330" fill="url(#sunGlow)"/>
+  <circle cx="1120" cy="600" r="54" fill="#ffe9c8" opacity="0.9"/>
 
   <!-- Stars -->
   <g fill="#ffffff" opacity="0.5">
-    <circle cx="180" cy="90" r="1.6"/><circle cx="340" cy="150" r="1.2"/>
-    <circle cx="520" cy="70" r="1.8"/><circle cx="700" cy="130" r="1.3"/>
-    <circle cx="880" cy="60" r="1.5"/><circle cx="1050" cy="120" r="1.2"/>
-    <circle cx="1240" cy="80" r="1.7"/><circle cx="1420" cy="140" r="1.3"/>
-    <circle cx="260" cy="220" r="1.1"/><circle cx="620" cy="240" r="1.2"/>
-    <circle cx="960" cy="210" r="1.1"/><circle cx="1340" cy="230" r="1.2"/>
+    <circle cx="150" cy="70" r="1.8"/><circle cx="300" cy="130" r="1.3"/>
+    <circle cx="470" cy="55" r="2"/><circle cx="640" cy="115" r="1.4"/>
+    <circle cx="820" cy="45" r="1.7"/><circle cx="990" cy="105" r="1.3"/>
+    <circle cx="1180" cy="65" r="1.9"/><circle cx="1360" cy="125" r="1.4"/>
+    <circle cx="230" cy="200" r="1.2"/><circle cx="560" cy="220" r="1.3"/>
+    <circle cx="900" cy="190" r="1.2"/><circle cx="1290" cy="210" r="1.3"/>
+    <circle cx="1480" cy="85" r="1.5"/>
   </g>
 
-  <!-- Distant mountains -->
-  <path d="M0 470 L170 350 L320 440 L470 320 L640 450 L820 340 L980 450 L1160 330 L1330 440 L1470 350 L1600 450 L1600 900 L0 900 Z"
-        fill="url(#hillFar)" opacity="0.85"/>
+  <!-- ===== Back range (hazy) ===== -->
+  <path d="M0 560 L140 470 L280 540 L420 450 L560 540 L700 460 L840 545 L980 465 L1120 545 L1260 470 L1400 545 L1540 480 L1600 520 L1600 700 L0 700 Z"
+        fill="#8a7a86" opacity="0.40"/>
 
-  <!-- Mist band -->
-  <rect x="0" y="430" width="1600" height="120" fill="url(#mist)"/>
+  <!-- ===== Faceted massif ===== -->
+  <!-- Peak 1 -->
+  <polygon points="150,470 10,700 150,700" fill="#8f7d82"/>
+  <polygon points="150,470 150,700 300,700" fill="#6b5d68"/>
 
-  <!-- Mid hills -->
-  <path d="M0 560 C 220 470, 430 610, 650 540 C 870 470, 1070 610, 1290 540 C 1430 495, 1520 550, 1600 525 L1600 900 L0 900 Z"
-        fill="url(#hillMid)"/>
+  <!-- Peak 2 -->
+  <polygon points="400,380 180,700 400,700" fill="#ab9691"/>
+  <polygon points="400,380 400,700 620,700" fill="#7c6b73"/>
+  <polygon points="400,380 365,560 400,700" fill="#c6ada6" opacity="0.45"/>
 
-  <!-- Near hills -->
-  <path d="M0 660 C 260 580, 520 720, 800 650 C 1080 580, 1340 720, 1600 640 L1600 900 L0 900 Z"
-        fill="url(#hillNear)"/>
+  <!-- Peak 3 (tallest) -->
+  <polygon points="720,330 490,700 720,700" fill="#b39c95"/>
+  <polygon points="720,330 720,700 950,700" fill="#816e75"/>
+  <polygon points="720,330 672,540 720,700" fill="#cdb4a9" opacity="0.45"/>
 
-  <!-- Meadow foreground -->
-  <path d="M0 780 C 300 720, 700 820, 1000 770 C 1250 730, 1450 800, 1600 765 L1600 900 L0 900 Z"
-        fill="url(#meadow)"/>
+  <!-- Peak 4 -->
+  <polygon points="1080,410 870,700 1080,700" fill="#a38e8d"/>
+  <polygon points="1080,410 1080,700 1290,700" fill="#77666f"/>
 
-  <!-- Small house -->
-  <g transform="translate(300 600)">
-    <rect x="0" y="30" width="96" height="62" fill="#e9e2d4"/>
-    <path d="M-12 32 L48 -10 L108 32 Z" fill="#6b5f56"/>
-    <rect x="38" y="56" width="22" height="36" fill="#4a4038"/>
+  <!-- Peak 5 -->
+  <polygon points="1400,470 1230,700 1400,700" fill="#92807f"/>
+  <polygon points="1400,470 1400,700 1600,700" fill="#6d5f6a"/>
+
+  <!-- Haze band -->
+  <rect x="0" y="620" width="1600" height="120" fill="url(#haze)"/>
+
+  <!-- ===== Rolling hills ===== -->
+  <path d="M0 660 C 200 615, 400 700, 620 655 C 840 610, 1060 700, 1280 655 C 1440 622, 1540 665, 1600 645 L1600 900 L0 900 Z"
+        fill="#3f6350"/>
+  <path d="M0 720 C 240 665, 480 760, 740 705 C 1000 650, 1240 760, 1600 695 L1600 900 L0 900 Z"
+        fill="#33564a"/>
+  <path d="M0 775 C 280 720, 560 810, 860 755 C 1140 705, 1400 800, 1600 755 L1600 900 L0 900 Z"
+        fill="#27453c"/>
+
+  <!-- ===== Meadow ===== -->
+  <path d="M0 830 C 320 795, 700 855, 1020 820 C 1280 792, 1460 838, 1600 815 L1600 900 L0 900 Z"
+        fill="#1e3a30"/>
+
+  <!-- ===== House ===== -->
+  <g transform="translate(210 690)">
+    <rect x="76" y="-6" width="13" height="28" fill="#5a4f46"/>
+    <rect x="0" y="30" width="100" height="62" fill="#e9e2d4"/>
+    <path d="M-13 32 L50 -10 L113 32 Z" fill="#4a4038"/>
+    <rect x="40" y="56" width="22" height="36" fill="#3a322c"/>
     <rect x="14" y="46" width="18" height="18" fill="#f2c98a"/>
-    <rect x="66" y="46" width="18" height="18" fill="#f2c98a"/>
+    <rect x="70" y="46" width="18" height="18" fill="#f2c98a"/>
   </g>
 
-  <!-- Trees -->
-  <g>
-    <g transform="translate(560 560)">
-      <rect x="16" y="46" width="9" height="40" fill="#3a2f28"/>
-      <circle cx="20" cy="34" r="34" fill="#2c4f42"/>
-      <circle cx="-8" cy="50" r="24" fill="#26463b"/>
-      <circle cx="48" cy="50" r="24" fill="#26463b"/>
-    </g>
-    <g transform="translate(1180 540)">
-      <rect x="18" y="52" width="10" height="46" fill="#3a2f28"/>
-      <circle cx="23" cy="38" r="38" fill="#2c4f42"/>
-      <circle cx="-9" cy="56" r="26" fill="#26463b"/>
-      <circle cx="55" cy="56" r="26" fill="#26463b"/>
-    </g>
-    <g transform="translate(1420 590)">
-      <rect x="13" y="40" width="8" height="34" fill="#3a2f28"/>
-      <circle cx="17" cy="28" r="28" fill="#2c4f42"/>
-      <circle cx="-7" cy="44" r="19" fill="#26463b"/>
-      <circle cx="41" cy="44" r="19" fill="#26463b"/>
-    </g>
-    <g transform="translate(880 600)">
-      <rect x="11" y="34" width="7" height="28" fill="#3a2f28"/>
-      <circle cx="14" cy="24" r="23" fill="#2c4f42"/>
-      <circle cx="-6" cy="38" r="16" fill="#26463b"/>
-      <circle cx="34" cy="38" r="16" fill="#26463b"/>
-    </g>
-  </g>
+  <!-- ===== Trees ===== -->
+  <use href="#tree" transform="translate(470 700) scale(1.1)"/>
+  <use href="#tree" transform="translate(640 760) scale(0.8)"/>
+  <use href="#tree" transform="translate(830 720) scale(1.25)"/>
+  <use href="#tree" transform="translate(1040 765) scale(0.85)"/>
+  <use href="#tree" transform="translate(1210 705) scale(1.05)"/>
+  <use href="#tree" transform="translate(1390 755) scale(0.9)"/>
+  <use href="#tree" transform="translate(340 765) scale(0.75)"/>
 
-  <!-- Flower field -->
+  <!-- ===== Flower field ===== -->
   <g opacity="0.95">
     <g fill="#e8a0b8">
-      <circle cx="120" cy="800" r="5"/><circle cx="210" cy="835" r="4"/>
-      <circle cx="340" cy="820" r="5"/><circle cx="480" cy="850" r="4"/>
-      <circle cx="630" cy="815" r="5"/><circle cx="770" cy="845" r="4"/>
-      <circle cx="910" cy="818" r="5"/><circle cx="1060" cy="848" r="4"/>
-      <circle cx="1210" cy="812" r="5"/><circle cx="1360" cy="842" r="4"/>
-      <circle cx="1490" cy="820" r="5"/>
+      <circle cx="90" cy="855" r="5"/><circle cx="180" cy="880" r="4"/>
+      <circle cx="300" cy="865" r="5"/><circle cx="430" cy="888" r="4"/>
+      <circle cx="560" cy="862" r="5"/><circle cx="690" cy="885" r="4"/>
+      <circle cx="820" cy="868" r="5"/><circle cx="950" cy="888" r="4"/>
+      <circle cx="1080" cy="860" r="5"/><circle cx="1210" cy="882" r="4"/>
+      <circle cx="1340" cy="865" r="5"/><circle cx="1470" cy="885" r="4"/>
     </g>
-    <g fill="#f0c98a">
-      <circle cx="160" cy="845" r="4"/><circle cx="280" cy="808" r="5"/>
-      <circle cx="410" cy="842" r="4"/><circle cx="550" cy="812" r="5"/>
-      <circle cx="700" cy="845" r="4"/><circle cx="840" cy="810" r="5"/>
-      <circle cx="990" cy="842" r="4"/><circle cx="1140" cy="810" r="5"/>
-      <circle cx="1290" cy="845" r="4"/><circle cx="1440" cy="810" r="5"/>
+    <g fill="#f0a868">
+      <circle cx="130" cy="885" r="4"/><circle cx="250" cy="855" r="5"/>
+      <circle cx="370" cy="882" r="4"/><circle cx="500" cy="858" r="5"/>
+      <circle cx="630" cy="885" r="4"/><circle cx="760" cy="856" r="5"/>
+      <circle cx="890" cy="882" r="4"/><circle cx="1020" cy="856" r="5"/>
+      <circle cx="1150" cy="885" r="4"/><circle cx="1280" cy="856" r="5"/>
+      <circle cx="1410" cy="882" r="4"/><circle cx="1530" cy="858" r="5"/>
     </g>
     <g fill="#b7a6e0">
-      <circle cx="250" cy="862" r="4"/><circle cx="370" cy="800" r="4"/>
-      <circle cx="510" cy="862" r="4"/><circle cx="660" cy="800" r="4"/>
-      <circle cx="810" cy="862" r="4"/><circle cx="960" cy="800" r="4"/>
-      <circle cx="1110" cy="862" r="4"/><circle cx="1260" cy="800" r="4"/>
-      <circle cx="1410" cy="862" r="4"/>
+      <circle cx="210" cy="895" r="4"/><circle cx="330" cy="848" r="4"/>
+      <circle cx="460" cy="895" r="4"/><circle cx="590" cy="848" r="4"/>
+      <circle cx="720" cy="895" r="4"/><circle cx="850" cy="848" r="4"/>
+      <circle cx="980" cy="895" r="4"/><circle cx="1110" cy="848" r="4"/>
+      <circle cx="1240" cy="895" r="4"/><circle cx="1370" cy="848" r="4"/>
+      <circle cx="1500" cy="895" r="4"/>
     </g>
   </g>
 </svg>
