@@ -7,7 +7,7 @@
   <meta name="description" content="Goku Labs designs and builds modern web and mobile apps, powered by Generative AI to help your business move faster." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -26,28 +26,35 @@
         <a href="#testimonials">Testimonials</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a href="#contact" class="btn btn-primary nav-cta">Get Started</a>
+      <div class="nav-actions">
+        <a href="#contact" class="btn btn-secondary nav-cta">Log in</a>
+        <a href="#contact" class="btn btn-primary nav-cta">Sign up</a>
+      </div>
     </div>
   </header>
 
   <!-- ===== Hero ===== -->
   <section id="home" class="hero">
-    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="blob-wrap" aria-hidden="true">
+      <div class="blob"></div>
+      <div class="blob blob-2"></div>
+    </div>
+
     <div class="container hero-inner">
       <div class="hero-text">
         <span class="badge">AI-Powered Development</span>
-        <h1>Build smarter apps, faster than ever.</h1>
+        <h1>Build <span class="highlight">smarter apps</span>, faster than ever</h1>
         <p>
-          We blend modern design with Agentic AI to create web and mobile<br />
-          experiences that are quick to launch, easy to scale, and built around you.
+          We blend modern design with Agentic AI to create web and mobile
+          experiences that are quick to launch, easy to scale, and built around
+          your business.
         </p>
         <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">Get Started →</a>
-          <a href="#about" class="btn btn-ghost">Learn More</a>
+          <a href="#about" class="btn btn-primary">Learn More</a>
+          <a href="#contact" class="btn btn-secondary">Get Started</a>
         </div>
       </div>
     </div>
-    <a href="#about" class="scroll-cue">Scroll ↓</a>
   </section>
 
   <!-- ===== Intro / About ===== -->
