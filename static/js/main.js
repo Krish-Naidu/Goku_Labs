@@ -150,10 +150,14 @@
 
   const initStarfield = () => {
     const canvas = document.getElementById("starfield");
-    if (!canvas || prefersReducedMotion) return;
+    if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    // Reduced motion should silence the movement, not delete the design — so
+    // those visitors get one static frame instead of a continuously animated one.
+    const staticFrame = prefersReducedMotion;
 
     const LINK_DISTANCE = 120;
     const POINTER_RADIUS = 150;
@@ -205,7 +209,7 @@
     const draw = (time) => {
       // Scroll parallax: stars crease with the page then settle back.
       scroll.velocity *= 0.92;
-      const parallax = scroll.velocity;
+      const parallax = staticFrame ? 0 : scroll.velocity;
 
       // Scale down around the centre to create the "formed constellation" framing.
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -222,22 +226,26 @@
         const pointerDistance = Math.hypot(dxp, dyp);
 
         // Gentle repulsion, mirroring the reference's pointer interaction.
-        if (pointerDistance < POINTER_RADIUS && pointerDistance > 0) {
+        if (!staticFrame && pointerDistance < POINTER_RADIUS && pointerDistance > 0) {
           star.x -= (dxp / pointerDistance) * 0.16;
           star.y -= (dyp / pointerDistance) * 0.16;
         }
 
-        star.x += star.vx;
-        star.y += star.vy;
+        if (!staticFrame) {
+          star.x += star.vx;
+          star.y += star.vy;
 
-        if (star.x < -30) star.x = width + 30;
-        if (star.x > width + 30) star.x = -30;
-        if (star.y < -30) star.y = height + 30;
-        if (star.y > height + 30) star.y = -30;
+          if (star.x < -30) star.x = width + 30;
+          if (star.x > width + 30) star.x = -30;
+          if (star.y < -30) star.y = height + 30;
+          if (star.y > height + 30) star.y = -30;
+        }
 
-        const twinkle = 0.72 + Math.sin(time * 0.0012 * star.pulse + star.phase) * 0.28;
+        const twinkle = staticFrame
+          ? 0.9
+          : 0.72 + Math.sin(time * 0.0012 * star.pulse + star.phase) * 0.28;
         const drawY = star.y + parallax * star.depth;
-        const near = Math.max(0, 1 - pointerDistance / (POINTER_RADIUS * 1.6));
+        const near = staticFrame ? 0 : Math.max(0, 1 - pointerDistance / (POINTER_RADIUS * 1.6));
 
         // Halo on the brighter stars so the field reads as depth, not noise.
         if (star.depth === 1) {
@@ -269,11 +277,17 @@
         }
       }
 
-      rafId = window.requestAnimationFrame(draw);
+      if (!staticFrame) rafId = window.requestAnimationFrame(draw);
     };
 
     build();
-    rafId = window.requestAnimationFrame(draw);
+    if (staticFrame) {
+      // One rendered frame is all a reduced-motion visitor needs.
+      draw(0);
+      rafId = 0;
+    } else {
+      rafId = window.requestAnimationFrame(draw);
+    }
 
     let resizeTimer = 0;
     window.addEventListener("resize", () => {
@@ -281,23 +295,26 @@
       resizeTimer = window.setTimeout(() => {
         window.cancelAnimationFrame(rafId);
         build();
-        rafId = window.requestAnimationFrame(draw);
+        rafId = staticFrame ? 0 : window.requestAnimationFrame(draw);
+        if (staticFrame) draw(0);
       }, 180);
     });
 
-    window.addEventListener(
-      "pointermove",
-      (event) => {
-        pointer.x = event.clientX;
-        pointer.y = event.clientY;
-      },
-      { passive: true }
-    );
+    if (!staticFrame) {
+      window.addEventListener(
+        "pointermove",
+        (event) => {
+          pointer.x = event.clientX;
+          pointer.y = event.clientY;
+        },
+        { passive: true }
+      );
 
-    window.addEventListener("pointerleave", () => {
-      pointer.x = -1000;
-      pointer.y = -1000;
-    });
+      window.addEventListener("pointerleave", () => {
+        pointer.x = -1000;
+        pointer.y = -1000;
+      });
+    }
 
     window.addEventListener(
       "scroll",
@@ -315,6 +332,7 @@
 
     // Stop animating when the tab is hidden to save battery.
     document.addEventListener("visibilitychange", () => {
+      if (staticFrame) return;
       if (document.hidden) {
         window.cancelAnimationFrame(rafId);
         rafId = 0;

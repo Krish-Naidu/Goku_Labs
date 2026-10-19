@@ -977,5 +977,7 @@ h1, h2, h3 {
 
   [data-reveal] { opacity: 1; transform: none; }
 
-  .starfield { display: none; }
+  /* The starfield keeps a single static frame rather than disappearing —
+     `display: none` here would erase the background for anyone with
+     "Animation effects" switched off in their OS. */
 }
