@@ -462,67 +462,7 @@ h1, h2, h3 {
   pointer-events: none;
 }
 
-.hero__inner {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(1.5rem, 4.5vw, 3.5rem);
-  max-width: 68rem;
-}
-
-.hero__copy { min-width: 0; }
-
-/* --- Pixel mascot --------------------------------------------------------- */
-
-.mascot {
-  position: relative;
-  width: clamp(96px, 13vw, 178px);
-  flex: none;
-}
-
-.mascot__dino {
-  width: 100%;
-  height: auto;
-  shape-rendering: crispEdges;
-  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.55));
-  animation: mascot-bob 5s var(--ease) infinite;
-}
-
-.mascot__eyes {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: mascot-blink 6.5s steps(1, end) infinite;
-}
-
-.mascot__pixel {
-  position: absolute;
-  width: clamp(6px, 0.9vw, 11px);
-  aspect-ratio: 1;
-  background: var(--purple);
-  opacity: 0.85;
-  animation: pixel-float 7s var(--ease) infinite;
-}
-
-.mascot__pixel--a { top: 6%; left: -22%; animation-delay: -1.2s; }
-.mascot__pixel--b { bottom: 16%; left: -30%; background: var(--blue); animation-delay: -3.4s; }
-.mascot__pixel--c { top: 44%; right: -18%; background: var(--purple-bright); animation-delay: -5.1s; }
-
-@keyframes mascot-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
-}
-
-@keyframes mascot-blink {
-  0%, 92%, 100% { transform: scaleY(1); }
-  94%, 96% { transform: scaleY(0.12); }
-}
-
-@keyframes pixel-float {
-  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.85; }
-  50% { transform: translate3d(0, -10px, 0); opacity: 0.45; }
-}
+.hero__inner { position: relative; z-index: 2; max-width: 60rem; }
 
 /* --- Pixel paper plane ---------------------------------------------------- */
 
@@ -1025,10 +965,6 @@ h1, h2, h3 {
   .contact { grid-template-columns: minmax(0, 1fr); }
 
   .panel { position: static; }
-
-  .hero__inner { grid-template-columns: minmax(0, 1fr); }
-
-  .mascot { width: clamp(76px, 16vw, 108px); margin-bottom: 0.5rem; }
 
   .hero__plane { top: clamp(5.5rem, 12vh, 8rem); right: clamp(0.75rem, 4vw, 2rem); }
 }
