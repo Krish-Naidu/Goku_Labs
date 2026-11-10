@@ -6,7 +6,7 @@ Marketing site for GokuLabs — a TanStack Start + React 19 + Tailwind CSS 4 app
 
 ```text
 Goku_Labs/
-├── public/                # Served verbatim: favicon, robots.txt, CNAME (gokulabs.com), .nojekyll
+├── public/                # Served verbatim: favicon set, robots.txt, CNAME (gokulabs.com), .nojekyll
 ├── src/
 │   ├── routes/
 │   │   ├── __root.tsx    # App shell: <head> meta, fonts, QueryClientProvider
@@ -53,6 +53,8 @@ The workflow in [.github/workflows/deploy-pages.yml](.github/workflows/deploy-pa
 > **Site not updating after a push?** Pages serves the artifact produced by the workflow. Check the **Actions** tab for a failed run, and that **Settings → Pages → Source** is set to **GitHub Actions**. GitHub also caches aggressively — hard-refresh (`Ctrl+F5`) or check <https://gokulabs.com> in a private window.
 
 ## Features
+
+- Branded favicon set (`favicon.ico` 16–256px + `favicon.svg` + `apple-touch-icon.png`) matching the ⚡ nav logo: white bolt on `--primary` orange.
 
 - Bricolage Grotesque display type, Hanken Grotesk body, JetBrains Mono accents via Google Fonts.
 - Micro-interactions: magnetic buttons, text-scramble nav links, live London clock, scroll reveals, neon neo-brutalist palette with `bg-ink` / `bg-primary` / `bg-accent` tokens.
