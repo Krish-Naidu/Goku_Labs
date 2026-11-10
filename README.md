@@ -1,88 +1,64 @@
 # GokuLabs
 
-Marketing site for GokuLabs — a vanilla HTML/CSS/JS front end served by a lightweight Flask app.
+Marketing site for GokuLabs — a TanStack Start + React 19 + Tailwind CSS 4 app.
 
 ## Structure
 
-```
+```text
 Goku_Labs/
-├── app.py                 # Flask server + contact form endpoint
-├── build_static.py        # Exports a static copy to _site/ for GitHub Pages
-├── requirements.txt
+├── public/                # Served verbatim: favicon, robots.txt, CNAME (gokulabs.com), .nojekyll
+├── src/
+│   ├── routes/
+│   │   ├── __root.tsx    # App shell: <head> meta, fonts, QueryClientProvider
+│   │   └── index.tsx     # The landing page
+│   ├── components/
+│   │   ├── site-bits.tsx # Shared micro-interactions (Magnetic, Scramble, LondonClock, useReveal)
+│   │   └── ui/            # shadcn/ui components
+│   ├── lib/               # error capture / reporting helpers
+│   ├── router.tsx         # Router + per-request QueryClient
+│   ├── server.ts          # Edge SSR error wrapper (unused by the static build)
+│   └── start.ts           # Server middleware (unused by the static build)
 ├── .github/workflows/
-│   └── deploy-pages.yml   # Builds and publishes _site/ to GitHub Pages
-├── templates/
-│   └── index.html         # Page markup (Jinja)
-├── static/
-│   ├── css/style.css      # Design system (dark glassmorphism)
-│   └── js/main.js         # Micro-interactions (vanilla JS)
-└── data/
-    └── messages.jsonl     # Contact enquiries (created at runtime, git-ignored)
+│   └── deploy-pages.yml   # Builds and publishes dist/client/ to GitHub Pages
+├── vite.config.ts         # Static prerender build config
+└── package.json
 ```
 
 ## Run
 
-The quickest way — install once, then run:
-
 ```bash
-python -m pip install -r requirements.txt
-python app.py
+npm install
+npm run dev        # http://localhost:8080
 ```
 
-Then open <http://127.0.0.1:5000>. Set `PORT` to use a different port.
-
-### Using a virtual environment (recommended for development)
+## Test
 
 ```bash
-python -m venv .venv
-.venv\Scripts\python.exe app.py      # Windows
-# source .venv/bin/activate && python app.py    # macOS / Linux
+npm test           # vitest
+npm run lint       # eslint
 ```
 
-> **`ModuleNotFoundError: No module named 'flask'`?**
-> This means the `python` on your PATH is a different interpreter than the one you
-> installed Flask into. Either install the requirements with that same interpreter
-> (`python -m pip install -r requirements.txt`), or call the venv directly with
-> `.venv\Scripts\python.exe app.py`. To check which interpreter you're using, run
-> `python -c "import sys; print(sys.executable)"`.
+## Build
 
-## Endpoints
+```bash
+npm run build
+```
 
-| Method | Path           | Description                                     |
-| ------ | -------------- | ----------------------------------------------- |
-| GET    | `/`            | Renders the site                                |
-| POST   | `/api/contact` | Validates and stores a contact submission       |
-| GET    | `/api/health`  | Health check                                    |
-
-`POST /api/contact` accepts form-encoded or JSON bodies with `name`, `email`, and `message`.
-It returns `{"ok": true, "message": "..."}` on success, or `400` with a per-field `errors`
-object on validation failure. Valid submissions are appended to `data/messages.jsonl`.
+The build prerenders `/` to plain HTML (`dist/client/index.html`) plus hashed asset bundles, ready for GitHub Pages. `npm run preview` serves the built app locally through the SSR server.
 
 ## Deploying to GitHub Pages
 
-GitHub Pages can only serve static files, so `build_static.py` renders the Jinja template
-to plain HTML and copies the assets into `_site/`:
+The workflow in [.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml) runs `npm ci && npm run build` on every push to `main` and publishes `dist/client/` to Pages. The custom domain `gokulabs.com` is served from the published artifact via [public/CNAME](public/CNAME).
 
-```bash
-python build_static.py
-```
-
-The workflow in `.github/workflows/deploy-pages.yml` runs this automatically on every push
-to `main` and publishes `_site/` to Pages.
-
-In a static build there is no Python process to receive the form, so the contact form
-degrades gracefully: it opens the visitor's email client with the message pre-filled,
-instead of silently failing. Run the Flask app if you want submissions stored server-side.
-
-> **Site not updating after a push?** Pages serves the `_site/` artifact produced by the
-> workflow. Check the **Actions** tab for a failed run, and that **Settings → Pages → Source**
-> is set to **GitHub Actions**.
+> **Site not updating after a push?** Pages serves the artifact produced by the workflow. Check the **Actions** tab for a failed run, and that **Settings → Pages → Source** is set to **GitHub Actions**. GitHub also caches aggressively — hard-refresh (`Ctrl+F5`) or check <https://gokulabs.com> in a private window.
 
 ## Features
 
-- Dark first design with neon purple / electric blue accents, glassmorphism cards and glow states.
-- Vanilla JS: scroll reveals, count-up stats, hero particle canvas, mouse-tracked hero glow,
-  card tilt, scroll progress bar, scroll spy, mobile nav, and AJAX form submission.
-- Accessible: semantic landmarks, skip link, visible focus states, `aria-expanded`/`aria-live`
-  wiring, and a full `prefers-reduced-motion` fallback.
-- Client-side validation mirrors the server rules; the server remains the source of truth.
+- Bricolage Grotesque display type, Hanken Grotesk body, JetBrains Mono accents via Google Fonts.
+- Micro-interactions: magnetic buttons, text-scramble nav links, live London clock, scroll reveals, neon neo-brutalist palette with `bg-ink` / `bg-primary` / `bg-accent` tokens.
+- Fully static deploy: no backend required, contact form degrades to a `mailto:` link.
+- Accessible: semantic landmarks, `aria-expanded` mobile nav, visible focus states, `prefers-reduced-motion` honored via Tailwind.
+
+## Project history
+
+The site was previously deployed as a Flask app (`app.py` + `templates/`) exported to static HTML by `build_static.py`. The repository has since been replaced with this Lovable Studio project (`lovable-project-studio-51.zip`); see `AGENTS.md` for Lovable-sync rules that still apply if the repo is reconnected.

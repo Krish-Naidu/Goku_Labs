@@ -1,4 +1,4 @@
-name: Deploy static site to Pages
+name: Deploy site to Pages
 
 on:
   push:
@@ -21,16 +21,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          python-version: "3.12"
+          node-version: "22"
+          cache: "npm"
 
       - name: Install dependencies
-        run: python -m pip install --upgrade pip && python -m pip install -r requirements.txt
+        run: npm ci
 
-      - name: Build static site
-        run: python build_static.py
+      - name: Build site
+        run: npm run build
+
+      - name: Ensure a 404 fallback exists for unknown paths
+        run: test -f dist/client/404.html || cp dist/client/index.html dist/client/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -38,7 +42,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "_site"
+          path: "dist/client"
 
   deploy:
     needs: build
