@@ -48,7 +48,7 @@ function Index() {
   };
 
   return (
-    <div className="grain min-h-screen overflow-x-hidden">
+    <div className="grain min-h-screen overflow-x-clip">
 
       {/* Nav */}
       <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/80 backdrop-blur">
